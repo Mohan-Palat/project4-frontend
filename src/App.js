@@ -1,30 +1,32 @@
 import "./App.css";
 import React, { Component } from "react";
 import { getSongList } from "./apis/Api";
+import DisplaySong from "./DisplaySong";
+// import {Route} from 'react-router-dom';
 
 class App extends Component {
+	state = {
+		color: "",
+		songs: [],
+	};
+
 	componentDidMount() {
 		getSongList()
 			.then((response) => {
-		console.log(response.data)
-		// 	this.setState({
-		// artist: response.data.artist,
-        //   title: response.data.title,
-		// });
+				//console.log(response.data)
 
+				this.setState({
+					songs: response.data,
+				});
+				//console.log(this.state.songs);
+				// 	this.setState({
+				// artist: response.data.artist,
+				//   title: response.data.title,
+				// });
 			})
 			.catch((error) => {
 				console.log("API Error: ", error);
 			});
-	}
-	constructor(props) {
-		super(props);
-		this.color = "";
-		this.state = {
-			color: props.color,
-			artist: [],
-			title: [],
-		};
 	}
 
 	changeBackgroundColor = (event) => {
@@ -32,16 +34,42 @@ class App extends Component {
 		return this.setState({
 			color: `"${event.target.value}"`,
 		});
-  };
-  
-  displaySongs = () =>{
+	};
 
-  }
+	// displaySongs = (songs) => {
+	// 	//console.log(songs);
+
+	// 	let allSongs = <h3>No songs!</h3>;
+	// 	if (songs.length > 0) {
+	// 		return songs.map((song, index) => {
+	// 			<div className="song">
+	// 				<p>
+	// 					{song.title} - {song.artist}
+	// 				</p>
+	// 			</div>;
+	// 			console.log(song.title, " - ", song.artist);
+	// 		});
+	// 	}
+	// 	console.log("AllSongs(56): ", allSongs);
+	// 	return allSongs;
+	// };
 
 	render() {
+		//	console.log("Songs:", this.state.songs);
+
+		let allSongs = <h3>No songs!</h3>;
+		if (this.state.songs.length > 0) {
+			allSongs = this.state.songs.map((song, index) => {
+				return (
+					<DisplaySong song={song.title} artist={song.artist} date={song.createdOn} key={index} />
+				);
+			});
+		}
+
 		return (
 			<>
 				<h1>Hello World!</h1>
+
 				<select
 					id={this.state.color}
 					name={this.state.color}
@@ -54,10 +82,7 @@ class App extends Component {
 					<option value="rgb(65,105,225">Royal Blue</option>
 					<option value="rgb(255,255,255)">White</option>
 				</select>
-				<div className="songinfo">
-					{getSongList}
-					{this.state.artist} - {this.state.title}
-				</div>
+				<div className="songList">{allSongs}</div>
 			</>
 		);
 	}
