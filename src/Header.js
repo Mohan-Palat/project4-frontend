@@ -1,4 +1,4 @@
-import './App.scss';
+import './Lights.scss';
 
 const Header = () =>{
     return (
