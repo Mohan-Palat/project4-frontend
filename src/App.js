@@ -1,28 +1,29 @@
 import "./App.css";
 import React, { Component } from "react";
-import { getSongList } from "./apis/Api";
+import {
+	getSongList,
+	refreshSongList,
+	sortByArtist,
+	sortByTitle,
+} from "./apis/Api";
 import DisplaySong from "./DisplaySong";
 // import {Route} from 'react-router-dom';
+import { Button } from "semantic-ui-react";
 
 class App extends Component {
 	state = {
 		color: "",
 		songs: [],
+		artistSort: "a",
+		titleSort: "a",
 	};
 
 	componentDidMount() {
 		getSongList()
 			.then((response) => {
-				//console.log(response.data)
-
 				this.setState({
 					songs: response.data,
 				});
-				//console.log(this.state.songs);
-				// 	this.setState({
-				// artist: response.data.artist,
-				//   title: response.data.title,
-				// });
 			})
 			.catch((error) => {
 				console.log("API Error: ", error);
@@ -36,39 +37,77 @@ class App extends Component {
 		});
 	};
 
-	// displaySongs = (songs) => {
-	// 	//console.log(songs);
+	refreshList = () => {
+		refreshSongList()
+			.then((response) => {
+				this.setState({
+					songs: response.data,
+				});
+			})
+			.catch((error) => {
+				console.log("API Error: ", error);
+			});
+	};
 
-	// 	let allSongs = <h3>No songs!</h3>;
-	// 	if (songs.length > 0) {
-	// 		return songs.map((song, index) => {
-	// 			<div className="song">
-	// 				<p>
-	// 					{song.title} - {song.artist}
-	// 				</p>
-	// 			</div>;
-	// 			console.log(song.title, " - ", song.artist);
-	// 		});
-	// 	}
-	// 	console.log("AllSongs(56): ", allSongs);
-	// 	return allSongs;
-	// };
+	sortArtist = () => {
+		let sort = this.state.titleSort;
+		sortByArtist(sort)
+			.then((response) => {
+				this.setState({
+					songs: response.data,
+				});
+			})
+			.catch((error) => {
+				console.log("API Error: ", error);
+			});
+		if (sort === "a") {
+			this.setState({ artistSort: "d" });
+		} else {
+			this.setState({ artistSort: "a" });
+		}
+	};
+	sortTitle = () => {
+		let sort = this.state.titleSort;
+		sortByTitle(sort)
+			.then((response) => {
+				this.setState({
+					songs: response.data,
+				});
+			})
+			.catch((error) => {
+				console.log("API Error: ", error);
+			});
+		if (sort === "a") {
+			this.setState({ titleSort: "d" });
+		} else {
+			this.setState({ titleSort: "a" });
+		}
+	};
 
 	render() {
-		//	console.log("Songs:", this.state.songs);
-
 		let allSongs = <h3>No songs!</h3>;
 		if (this.state.songs.length > 0) {
 			allSongs = this.state.songs.map((song, index) => {
 				return (
-					<DisplaySong song={song.title} artist={song.artist} date={song.createdOn} key={index} />
+					<DisplaySong
+						song={song.title}
+						artist={song.artist}
+						date={song.date}
+						hours={song.hours}
+						minutes={song.minutes}
+						seconds={song.seconds}
+						key={index}
+					/>
 				);
 			});
 		}
 
 		return (
 			<>
-				<h1>Hello World!</h1>
+				<h1>Christmas Analysis of Music</h1>
+				<Button onClick={() => this.refreshList()}>Refresh List</Button>
+				<Button onClick={() => this.sortArtist()}>Sort By Artist</Button>
+				<Button onClick={() => this.sortTitle()}>Sort By Title</Button>
 
 				<select
 					id={this.state.color}

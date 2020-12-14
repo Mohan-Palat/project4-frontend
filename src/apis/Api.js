@@ -12,4 +12,11 @@ const getSongList = () => {
 const refreshSongList = () =>{
     return axios.get("/refresh");
 }
-export { getSongList, refreshSongList };
+
+const sortByArtist = (s) =>{
+    return axios.get(`/artist/${s}`);
+}
+const sortByTitle = (s) =>{
+    return axios.get(`/title/${s}`);
+}
+export { getSongList, refreshSongList, sortByArtist, sortByTitle };
