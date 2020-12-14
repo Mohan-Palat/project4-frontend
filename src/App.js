@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import React, { Component } from "react";
 import {
 	getSongList,
@@ -11,7 +11,7 @@ import {
 import DisplaySong from "./DisplaySong";
 import DisplayGroup from "./DisplayGroup";
 // import {Route} from 'react-router-dom';
-import { Button } from "semantic-ui-react";
+//import { Button } from "semantic-ui-react";
 
 class App extends Component {
 	state = {
@@ -22,6 +22,8 @@ class App extends Component {
 		count: "",
 		songGroup: [],
 		showGroup: false,
+		titleLabel: "A-Z",
+		artistLabel: "A-Z",
 	};
 
 	componentDidMount() {
@@ -36,6 +38,18 @@ class App extends Component {
 			});
 		this.lastUpdatedDate();
 		
+	}
+
+	showList = () =>{
+		getSongList()
+		.then((response) => {
+			this.setState({
+				songs: response.data,
+			});
+		})
+		.catch((error) => {
+			console.log("API Error: ", error);
+		});
 	}
 
 	refreshList = () => {
@@ -59,15 +73,16 @@ class App extends Component {
 				this.setState({
 					songs: response.data,
 					showGroup: false,
+					
 				});
 			})
 			.catch((error) => {
 				console.log("API Error: ", error);
 			});
 		if (sort === "a") {
-			this.setState({ artistSort: "d" });
+			this.setState({ artistSort: "d", artistLabel: "Z-A" });
 		} else {
-			this.setState({ artistSort: "a" });
+			this.setState({ artistSort: "a", artistLabel: "A-Z" });
 		}
 	};
 	sortTitle = () => {
@@ -83,9 +98,9 @@ class App extends Component {
 				console.log("API Error: ", error);
 			});
 		if (sort === "a") {
-			this.setState({ titleSort: "d" });
+			this.setState({ titleSort: "d", titleLabel: "Z-A" });
 		} else {
-			this.setState({ titleSort: "a" });
+			this.setState({ titleSort: "a", titleLabel: "A-Z" });
 		}
 	};
 
@@ -152,14 +167,43 @@ class App extends Component {
 		}
 		return (
 			<>
+			<div class="lights">
+			<ul class="lightrope">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  
+</ul>
+</div> 
+<div class="intro">
 				<h1>Christmas Radio Analysis of Music</h1>
 				<h3>Courtesy of Magic 98.3</h3>
-				{<p>Last Updated: {this.state.lastUpdated}</p>}
-				<Button onClick={() => this.refreshList()}>Refresh List</Button>
-				<Button onClick={() => this.sortArtist()}>Sort By Artist</Button>
-				<Button onClick={() => this.sortTitle()}>Sort By Title</Button>
-				<Button onClick={() => this.groupBy()}>Group By</Button>
-
+				<div class="refresh">
+				Last Updated: {this.state.lastUpdated}
+				</div>
+				<button onClick={() => this.showList()}>By Date</button>
+				<button onClick={() => this.sortArtist()}>By Artist {this.state.artistLabel}</button>
+				<button onClick={() => this.sortTitle()}>By Title {this.state.titleLabel}</button>
+				<button onClick={() => this.groupBy()}>Song Count</button>
+				<button onClick={() => this.refreshList()}>Refresh List</button>
+				
+				</div>
 				<div className="songList">{allSongs}</div>
 			</>
 		);
