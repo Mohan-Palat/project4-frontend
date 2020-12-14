@@ -19,6 +19,10 @@ const searchFor = (s) => {
 };
 
 const getFirstSong = () =>{
-	return axios.get(`/first/`);
+	return axios.get(`/first`);
 }
-export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor, getFirstSong };
+
+const groupBySong = () =>{
+	return axios.get(`/group`);
+}
+export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor, getFirstSong, groupBySong };

@@ -6,18 +6,22 @@ import {
 	sortByArtist,
 	sortByTitle,
 	getFirstSong,
+	groupBySong,
 } from "./apis/Api";
 import DisplaySong from "./DisplaySong";
+import DisplayGroup from "./DisplayGroup";
 // import {Route} from 'react-router-dom';
 import { Button } from "semantic-ui-react";
 
 class App extends Component {
 	state = {
-		color: "",
 		songs: [],
 		artistSort: "a",
 		titleSort: "a",
 		lastUpdated: "",
+		count: "",
+		songGroup: [],
+		showGroup: false,
 	};
 
 	componentDidMount() {
@@ -31,6 +35,7 @@ class App extends Component {
 				console.log("API Error: ", error);
 			});
 		this.lastUpdatedDate();
+		
 	}
 
 	refreshList = () => {
@@ -38,6 +43,7 @@ class App extends Component {
 			.then((response) => {
 				this.setState({
 					songs: response.data,
+					showGroup: false,
 				});
 			})
 			.catch((error) => {
@@ -52,6 +58,7 @@ class App extends Component {
 			.then((response) => {
 				this.setState({
 					songs: response.data,
+					showGroup: false,
 				});
 			})
 			.catch((error) => {
@@ -69,6 +76,7 @@ class App extends Component {
 			.then((response) => {
 				this.setState({
 					songs: response.data,
+					showGroup: false,
 				});
 			})
 			.catch((error) => {
@@ -93,25 +101,55 @@ class App extends Component {
 			});
 	};
 
+	groupBy = () => {
+		groupBySong()
+			.then((response) => {
+				this.setState({
+					songGroup: response.data,
+					showGroup: true,
+				});
+			})
+			.catch((error) => {
+				console.log("API Error: ", error);
+			});
+	};
+
 	render() {
 		let allSongs = <h3>No songs!</h3>;
-		if (this.state.songs.length > 0) {
-			allSongs = this.state.songs.map((song, index) => {
-				return (
-					<DisplaySong
-						song={song.title}
-						artist={song.artist}
-						month={song.month}
-						date={song.date}
-						hours={song.hours}
-						minutes={song.minutes}
-						seconds={song.seconds}
-						key={index}
-					/>
-				);
-			});
+		console.log(this.state.showGroup)
+		if (this.state.showGroup) {
+			if (this.state.songGroup.length > 0) {
+				allSongs = this.state.songGroup.map((song, index) => {
+					return (
+						<DisplayGroup
+							song={song._id.title}
+							artist={song._id.artist}
+							key={index}
+							count={song.count}
+						/>
+					);
+				});
+			}
+			
+		} else {
+			if (this.state.songs.length > 0) {
+				allSongs = this.state.songs.map((song, index) => {
+					return (
+						<DisplaySong
+							song={song.title}
+							artist={song.artist}
+							month={song.month}
+							date={song.date}
+							hours={song.hours}
+							minutes={song.minutes}
+							seconds={song.seconds}
+							key={index}
+							count={song.count}
+						/>
+					);
+				});
+			}
 		}
-
 		return (
 			<>
 				<h1>Christmas Radio Analysis of Music</h1>
@@ -120,6 +158,7 @@ class App extends Component {
 				<Button onClick={() => this.refreshList()}>Refresh List</Button>
 				<Button onClick={() => this.sortArtist()}>Sort By Artist</Button>
 				<Button onClick={() => this.sortTitle()}>Sort By Title</Button>
+				<Button onClick={() => this.groupBy()}>Group By</Button>
 
 				<div className="songList">{allSongs}</div>
 			</>
