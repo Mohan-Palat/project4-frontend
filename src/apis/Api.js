@@ -17,4 +17,8 @@ const sortByTitle = (s) => {
 const searchFor = (s) => {
 	return axios.get(`/search/${s}`);
 };
-export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor };
+
+const getFirstSong = () =>{
+	return axios.get(`/first/`);
+}
+export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor, getFirstSong };
