@@ -30,12 +30,12 @@ class App extends Component {
 			});
 	}
 
-	changeBackgroundColor = (event) => {
-		console.log("Change BG Color", event.target.value);
-		return this.setState({
-			color: `"${event.target.value}"`,
-		});
-	};
+	// changeBackgroundColor = (event) => {
+	// 	console.log("Change BG Color", event.target.value);
+	// 	return this.setState({
+	// 		color: `"${event.target.value}"`,
+	// 	});
+	// };
 
 	refreshList = () => {
 		refreshSongList()
@@ -50,7 +50,7 @@ class App extends Component {
 	};
 
 	sortArtist = () => {
-		let sort = this.state.titleSort;
+		let sort = this.state.artistSort;
 		sortByArtist(sort)
 			.then((response) => {
 				this.setState({
@@ -87,16 +87,19 @@ class App extends Component {
 	render() {
 		let allSongs = <h3>No songs!</h3>;
 		if (this.state.songs.length > 0) {
+			let lastUpdated = `${this.state.songs[0].month}/${this.state.songs[0].date} @ ${this.state.songs[0].hours}:${this.state.songs[0].minutes}:${this.state.songs[0].seconds}`;
 			allSongs = this.state.songs.map((song, index) => {
 				return (
 					<DisplaySong
 						song={song.title}
 						artist={song.artist}
+						month={song.month}
 						date={song.date}
 						hours={song.hours}
 						minutes={song.minutes}
 						seconds={song.seconds}
 						key={index}
+						lastUpdated={lastUpdated}
 					/>
 				);
 			});
@@ -104,12 +107,13 @@ class App extends Component {
 
 		return (
 			<>
-				<h1>Christmas Analysis of Music</h1>
+				<h1>Christmas Radio Analysis of Music</h1>
+				<h3>Courtesy of Magic 98.3</h3>
 				<Button onClick={() => this.refreshList()}>Refresh List</Button>
 				<Button onClick={() => this.sortArtist()}>Sort By Artist</Button>
 				<Button onClick={() => this.sortTitle()}>Sort By Title</Button>
 
-				<select
+				{/* <select
 					id={this.state.color}
 					name={this.state.color}
 					onChange={this.changeBackgroundColor}
@@ -120,7 +124,7 @@ class App extends Component {
 					<option value="rgb(122,255,151">Light Green</option>
 					<option value="rgb(65,105,225">Royal Blue</option>
 					<option value="rgb(255,255,255)">White</option>
-				</select>
+				</select> */}
 				<div className="songList">{allSongs}</div>
 			</>
 		);
