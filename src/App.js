@@ -7,11 +7,13 @@ import {
 	sortByTitle,
 	getFirstSong,
 	groupBySong,
+	searchFor,
 } from "./apis/Api";
-import DisplaySong from "./DisplaySong";
-import DisplayGroup from "./DisplayGroup";
-// import {Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
+import About from './About';
+import Header from './Header';
 //import { Button } from "semantic-ui-react";
+import DisplaySongs from './DisplaySongs';
 
 class App extends Component {
 	state = {
@@ -24,6 +26,8 @@ class App extends Component {
 		showGroup: false,
 		titleLabel: "A-Z",
 		artistLabel: "A-Z",
+		results: [],
+		showResults: false,
 	};
 
 	componentDidMount() {
@@ -45,6 +49,8 @@ class App extends Component {
 		.then((response) => {
 			this.setState({
 				songs: response.data,
+				showGroup: false,
+				showResults: false,
 			});
 		})
 		.catch((error) => {
@@ -58,6 +64,7 @@ class App extends Component {
 				this.setState({
 					songs: response.data,
 					showGroup: false,
+					showResults: false,
 				});
 			})
 			.catch((error) => {
@@ -73,6 +80,7 @@ class App extends Component {
 				this.setState({
 					songs: response.data,
 					showGroup: false,
+					showResults: false,
 					
 				});
 			})
@@ -92,6 +100,7 @@ class App extends Component {
 				this.setState({
 					songs: response.data,
 					showGroup: false,
+					showResults: false,
 				});
 			})
 			.catch((error) => {
@@ -117,11 +126,12 @@ class App extends Component {
 	};
 
 	groupBy = () => {
-		groupBySong()
+		groupBySong()		
 			.then((response) => {
 				this.setState({
 					songGroup: response.data,
 					showGroup: true,
+					showResults: false,
 				});
 			})
 			.catch((error) => {
@@ -129,74 +139,33 @@ class App extends Component {
 			});
 	};
 
+	searchForSong = (phrase) =>{
+		searchFor(phrase)
+		.then((response) =>{
+			this.setState({
+				results: response.data,
+				showGroup: false,
+				showResults: true,
+			})
+		})
+		.catch((error) =>{
+			console.log("API Error: ", error)
+		})
+
+	}
+
 	render() {
-		let allSongs = <h3>No songs!</h3>;
-		console.log(this.state.showGroup)
-		if (this.state.showGroup) {
-			if (this.state.songGroup.length > 0) {
-				allSongs = this.state.songGroup.map((song, index) => {
-					return (
-						<DisplayGroup
-							song={song._id.title}
-							artist={song._id.artist}
-							key={index}
-							count={song.count}
-						/>
-					);
-				});
-			}
-			
-		} else {
-			if (this.state.songs.length > 0) {
-				allSongs = this.state.songs.map((song, index) => {
-					return (
-						<DisplaySong
-							song={song.title}
-							artist={song.artist}
-							month={song.month}
-							date={song.date}
-							hours={song.hours}
-							minutes={song.minutes}
-							seconds={song.seconds}
-							key={index}
-							count={song.count}
-						/>
-					);
-				});
-			}
-		}
 		return (
 			<>
-			<div class="lights">
-			<ul class="lightrope">
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  <li></li>
-  
-</ul>
-</div> 
-<div class="intro">
+			<Header />
+<div className="intro">
+	
 				<h1>Christmas Radio Analysis of Music</h1>
 				<h3>Courtesy of Magic 98.3</h3>
-				<div class="refresh">
 				Last Updated: {this.state.lastUpdated}
+				
 				</div>
+				<div className="links">
 				<button onClick={() => this.showList()}>By Date</button>
 				<button onClick={() => this.sortArtist()}>By Artist {this.state.artistLabel}</button>
 				<button onClick={() => this.sortTitle()}>By Title {this.state.titleLabel}</button>
@@ -204,7 +173,12 @@ class App extends Component {
 				<button onClick={() => this.refreshList()}>Refresh List</button>
 				
 				</div>
-				<div className="songList">{allSongs}</div>
+				
+					<DisplaySongs
+					songs={this.state.songs}
+					songGroup={this.state.songGroup}
+					showGroup={this.state.showGroup}
+					 />
 			</>
 		);
 	}
