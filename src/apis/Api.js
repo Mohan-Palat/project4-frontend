@@ -22,7 +22,7 @@ const getFirstSong = () =>{
 	return axios.get(`/first`);
 }
 
-const groupBySong = () =>{
-	return axios.get(`/group`);
+const countBySong = (s) =>{
+	return axios.get(`/count/${s}`);
 }
-export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor, getFirstSong, groupBySong };
+export { getSongList, refreshSongList, sortByArtist, sortByTitle, searchFor, getFirstSong, countBySong };

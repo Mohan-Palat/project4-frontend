@@ -124,6 +124,9 @@ body {
 			rgba(247, 0, 148, 0.2);
 	}
 }
+section{
+	padding:25px 0px;
+}
 table {
 	border-collapse: collapse;
 	font-family: helvetica;
@@ -138,6 +141,10 @@ th {
 	width: 300px;
 	box-sizing: border-box;
 	text-align: center;
+	
+}
+th{
+	color: red;
 }
 
 button {

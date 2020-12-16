@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class DisplayGroup extends Component {
+class DisplayCount extends Component {
 	render() {
 		return (
 			<>
@@ -14,4 +14,4 @@ class DisplayGroup extends Component {
 	}
 }
 
-export default DisplayGroup;
+export default DisplayCount;
