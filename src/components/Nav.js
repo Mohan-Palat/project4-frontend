@@ -1,5 +1,10 @@
 <div className="links">
 					<Link to="/">
+//Summary (should it first do a refresh and then display??)
+//Full List
+//Song Count
+Search
+
 
 				<Link to="/showList"><button onClick={() => this.refreshList()}>Full List</button></Link>
 				{/* <button onClick={() => this.showList()}>Full List</button> */}
