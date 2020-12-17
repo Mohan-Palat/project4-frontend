@@ -1,40 +1,40 @@
 import axios from "axios";
 
-const getSongList = () => {
-	return axios.get("/songs");
+const getSongList = (o) => {
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/${o}`);
 };
 
 const refreshSongList = () => {
-	return axios.get("/refresh");
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/refresh`);
 };
 
 const sortByArtist = (s) => {
-	return axios.get(`/artist/${s}`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/artist/${s}`);
 };
 const sortByTitle = (o) => {
-	return axios.get(`/title/${o}`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/title/${o}`);
 };
 const searchFor = (s) => {
-	return axios.get(`/search/?term=${s}`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/search/?term=${s}`);
 };
 
 const getFirstSong = () => {
-	return axios.get(`/first`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/first`);
 };
 const getLastSong = () => {
-	return axios.get(`/last`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/last`);
 };
 
 const countBySong = (s) => {
-	return axios.get(`/count/${s}`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/count/${s}`);
 };
 
 const getTodaySongs = () =>{
-	return axios.get(`/today`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/today`);
 }
 
 const getTodayCount = () =>{
-	return axios.get(`/todayCount`);
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/todayCount`);
 }
 export {
 	refreshSongList,

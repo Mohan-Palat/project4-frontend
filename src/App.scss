@@ -41,3 +41,16 @@ button {
 	color: red;
 	text-align: center;
 }
+
+input {
+border: 2px solid red;
+background-color: black;
+color: green;
+margin: 5px;
+padding: 2px;
+}
+::placeholder {
+	color: green;
+	opacity: 1;
+	text-align: center;
+}

@@ -1,23 +1,21 @@
 import "./App.scss";
 import React, { Component } from "react";
 import {
-	//	getSongList,
+	getSongList,
 	refreshSongList,
 	sortByArtist,
 	sortByTitle,
 	getFirstSong,
 	countBySong,
 	searchFor,
-	getSongList,
 } from "./apis/Api";
 import { Route, Link } from "react-router-dom";
 import About from "./pages/components/About";
 import Header from "./components/Header";
-//import { Button } from "semantic-ui-react";
 import DisplaySongs from "./components/DisplaySongs";
 import Footer from "./components/Footer";
 import Today from "./components/Today";
-import SearchBox from "./components/SearchBox";
+import Search from "./components/Search";
 
 class App extends Component {
 	state = {
@@ -25,6 +23,7 @@ class App extends Component {
 		artistSort: "a",
 		titleSort: "a",
 		countSort: "d",
+		songSort: "descending",
 		lastUpdated: "",
 		count: "",
 		songCount: [],
@@ -34,26 +33,31 @@ class App extends Component {
 		searchResults: [],
 		showResults: false,
 		viewToday: true,
-		searchTerm: '',
+		searchTerm: "",
 	};
 
 	componentDidMount() {
 		this.refreshList();
 	}
 
-	showList = () =>{
-		getSongList()
-		.then((response) => {
-			this.setState({
-				songs: response.data,
-				showCount: false,
-				showResults: false,
+	showList = () => {
+		getSongList(this.state.songSort)
+			.then((response) => {
+				this.setState({
+					songs: response.data,
+					showCount: false,
+					showResults: false,
+				});
+			})
+			.catch((error) => {
+				console.log("API Error: ", error);
 			});
-		})
-		.catch((error) => {
-			console.log("API Error: ", error);
-		});
-	}
+		if (this.state.songSort === "descending") {
+			this.setState({ songSort: "ascending" });
+		} else {
+			this.setState({ songSort: "descending" });
+		}
+	};
 
 	getTodayDate = () => {
 		const now = new Date();
@@ -147,7 +151,7 @@ class App extends Component {
 	};
 
 	// searchForSong = (phrase) => {
-		
+
 	// 	searchFor(phrase)
 	// 		.then((response) => {
 	// 			this.setState({
@@ -161,14 +165,15 @@ class App extends Component {
 	// 		});
 	// };
 
-	updateSearch = (e) =>{
-		console.log(e)
-	return	this.setState({
-			searchTerm: e
-		})
-	}
+	updateSearch = (e) => {
+		console.log(e);
+		return this.setState({
+			searchTerm: e,
+		});
+	};
 
 	render() {
+		
 		return (
 			<>
 				<header>
@@ -183,43 +188,44 @@ class App extends Component {
 								Magic 98.3
 							</a>
 						</h3>
-						Last Updated: {this.state.lastUpdated}
+						<p>Last Updated: {this.state.lastUpdated}</p>
 					</div>
-					<input type="text" value={this.state.searchTerm} onChange={(e) => this.updateSearch(e.target.value)}></input>
-					<button onclick={this.searchForSong(this.state.searchTerm)}>Search</button>
+					<input
+						size="45"
+						type="text"
+						value={this.state.searchTerm}
+						placeholder="Search for song or artist"
+						onChange={(e) => this.updateSearch(e.target.value)}
+					></input>
+					<Link to="/search"><button>Search</button></Link>
+					{/* <button onclick={this.searchForSong(this.state.searchTerm)}>Search</button> */}
 					<div className="links">
 						<Link to="/">
 							<Link to="/">
-								<button onClick={() => this.refreshList}>Today</button>
+								<button onClick={() => this.refreshList()}>Today</button>
 							</Link>
-							<Link to="/showList">
-								{/* <button onClick={() => this.refreshList()}>Full List</button> */}
-							</Link>
-							{/* <button onClick={() => this.showList()}>Full List</button> */}
-							{/* <Link to="/showList"><button>Full List</button></Link> */}
 							<Link to="/showList">
 								<button onClick={() => this.countBy()}>Song Count</button>
 							</Link>
-							{/* <button onClick={() => this.refreshList()}>Refresh</button> */}
+							<Link to="/showList">
+								<button onClick={() => this.refreshList()}>Full List</button>
+							</Link>
 						</Link>
 						<Link to="/about">
 							<button>About</button>
 						</Link>
 					</div>
-					<Route path="/search" exact render={() =>(
-						<DisplaySongs
-						songs={this.state.searchResults}
-						songCount={this.state.songCount}
-						showCount={this.state.showCount}
-						sortArtist={this.sortArtist}
-						sortTitle={this.sortTitle}
-						artistLabel={this.state.artistLabel}
-						titleLabel={this.state.titleLabel}
-						showList={this.showList}
-						showResults={this.showResults}
-					/>
-
-					)}></Route>
+					<Route
+						path="/search"
+						exact
+						render={() => (
+							<Search
+							term={this.state.searchTerm} 
+							/>
+							
+						)}
+						></Route>
+					
 					<Route
 						path="/showList"
 						exact
@@ -254,6 +260,8 @@ class App extends Component {
 						)}
 					></Route>
 					<Route path="/about" exact component={About} />
+
+					
 				</section>
 				<footer>
 					<Footer />
