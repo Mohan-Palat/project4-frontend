@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+//Displays song title, artist, and date/time played in a table.
 class DisplaySong extends Component {
 	render() {
 		return (

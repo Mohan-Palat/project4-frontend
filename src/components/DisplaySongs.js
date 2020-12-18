@@ -4,38 +4,21 @@ import DisplaySong from "./DisplaySong";
 import DisplayCount from "./DisplayCount";
 
 class DisplaySongs extends Component {
-	state = {
-		compareDate: new Date().getDate(),
+	sortList = (songs) => {
+		songs.sort((a, b) => {
+			return a.createdOn - b.createdOn;
+		});
 	};
-	componentDidMount() {
-		// getSongList()
-		// 	.then((response) => {
-		// 		this.setState({
-		// 			songs: response.data,
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log("API Error: ", error);
-		// 	});
-	}
 
-	sortList = (songs) =>{
-songs.sort((a,b) =>{
-	return a.createdOn - b.createdOn;
-})
-	}
-	
 	render() {
-	
-		console.log("In DSs");
-		let songLength = this.props.songs.length;
-		let songCountLength = this.props.songCount.length;
-	
-		
-		let allSongs = <h3>No songs!</h3>;
+		let songLength = this.props.songs.length; //Used in statement about number of songs over season
+		let songCountLength = this.props.songCount.length; //Used in statement about number of unique songs played.
+
+		let allSongs = <h3>No songs!</h3>; //Placeholder in case API call returns 0 documents
+
+		//Execute if the Song Count toggle is checked.
 		if (this.props.showCount) {
 			if (this.props.songCount.length > 0) {
-				
 				allSongs = this.props.songCount.map((song, index) => {
 					return (
 						<DisplayCount
@@ -48,12 +31,8 @@ songs.sort((a,b) =>{
 				});
 			}
 		} else {
+			///Execute if Song Count toggle is not checked.
 			songLength = this.props.songs.length;
-			// let lastPlayed = this.props.songs.map((song, index) =>{
-			// 	if (index!=this.props.songs.length-1){ } else{
-			// 		return `${song.month}/${song.date}`
-			// 	}
-			// });
 			allSongs = this.props.songs.map((song, index) => {
 				return (
 					<DisplaySong
@@ -73,7 +52,10 @@ songs.sort((a,b) =>{
 		return (
 			<>
 				<div className="song">
-					<p>{songCountLength} unique songs were played {songLength} times this holiday season.</p>
+					<p>
+						{songCountLength} unique songs were played {songLength} times this
+						holiday season.
+					</p>
 					<table>
 						<th onClick={() => this.props.sortTitle(allSongs)}>
 							Title

@@ -7,7 +7,6 @@ import {
 	sortByTitle,
 	getFirstSong,
 	countBySong,
-	searchFor,
 } from "./apis/Api";
 import { Route, Link } from "react-router-dom";
 import About from "./pages/components/About";
@@ -19,25 +18,26 @@ import Search from "./components/Search";
 
 class App extends Component {
 	state = {
-		songs: [],
-		artistSort: "a",
-		titleSort: "a",
-		countSort: "d",
-		songSort: "descending",
-		lastUpdated: "",
+		songs: [], //Stores songs from API calls
+		artistSort: "a", //sorts by artist.  Default is ascending
+		titleSort: "a", //sorts by title.  Default is ascending
+		countSort: "d", //sorts by number of times song was played.  Default is higher count
+		songSort: "descending", //sorts by date/time song was plaed.  Default is more recent
+		lastUpdated: "", //Used for last updated statement
 		count: "",
-		songCount: [],
-		showCount: false,
-		titleLabel: "A-Z",
-		artistLabel: "A-Z",
-		searchResults: [],
-		showResults: false,
-		viewToday: true,
-		searchTerm: "",
+		songCount: [], //Stores count of songs from API call
+		showCount: false, //Toggles whether song counts or list of songs played by date/time is rendered
+		titleLabel: "A-Z", //Used to prompt user on how to sort title column
+		artistLabel: "A-Z", //Used to prompt user on how to sort artist column
+		searchResults: [], //Stores songs from search API call
+		showResults: false, //Used to toggle rendering of search results
+		viewToday: true, //Used to toggle rendering of today's results
+		searchTerm: "", //Stores input from search box
 	};
 
 	componentDidMount() {
-		this.refreshList();
+		this.refreshList(); //Loads most up-to-date of recently played songs
+		this.countBy(); //Loads the count of unique songs played.
 	}
 
 	showList = () => {
@@ -150,21 +150,6 @@ class App extends Component {
 		}
 	};
 
-	// searchForSong = (phrase) => {
-
-	// 	searchFor(phrase)
-	// 		.then((response) => {
-	// 			this.setState({
-	// 				searchResults: response.data,
-	// 				showGroup: false,
-	// 				showResults: true,
-	// 			});
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log("API Error: ", error);
-	// 		});
-	// };
-
 	updateSearch = (e) => {
 		console.log(e);
 		return this.setState({
@@ -173,7 +158,6 @@ class App extends Component {
 	};
 
 	render() {
-		
 		return (
 			<>
 				<header>
@@ -197,8 +181,10 @@ class App extends Component {
 						placeholder="Search for song or artist"
 						onChange={(e) => this.updateSearch(e.target.value)}
 					></input>
-					<Link to="/search"><button>Search</button></Link>
-					{/* <button onclick={this.searchForSong(this.state.searchTerm)}>Search</button> */}
+					<Link to="/search">
+						<button>Search</button>
+					</Link>
+					
 					<div className="links">
 						<Link to="/">
 							<Link to="/">
@@ -218,14 +204,10 @@ class App extends Component {
 					<Route
 						path="/search"
 						exact
-						render={() => (
-							<Search
-							term={this.state.searchTerm} 
-							/>
-							
-						)}
-						></Route>
-					
+						render={() => <Search term={this.state.searchTerm}
+						 />}
+					></Route>
+
 					<Route
 						path="/showList"
 						exact
@@ -260,8 +242,6 @@ class App extends Component {
 						)}
 					></Route>
 					<Route path="/about" exact component={About} />
-
-					
 				</section>
 				<footer>
 					<Footer />

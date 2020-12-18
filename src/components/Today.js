@@ -11,6 +11,8 @@ class Today extends Component {
 		showList: false,
 		today: true,
 	};
+
+	//Calls the API for the collection of documents for the songs played on the current date since 12:00a.
 	componentDidMount() {
 		this.getToday();
 		this.todayCount();
@@ -45,10 +47,10 @@ class Today extends Component {
 		let hours = new Date().getHours();
 		let songLength = 0;
 		let songAverage = 0;
-		let songCountLength = 0;
+		
 		let allSongs = <h3>No songs!</h3>;
 		let allCountSongs = <h3>No songs!</h3>;
-		songCountLength = this.state.songCount.length;
+		
 		allCountSongs = this.state.songCount.map((song, index) => {
 			return (
 				<DisplayCount

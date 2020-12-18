@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+//Displays song title, artist, and count played in a table
 class DisplayCount extends Component {
 	render() {
 		return (
