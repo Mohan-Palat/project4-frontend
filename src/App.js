@@ -21,7 +21,7 @@ class App extends Component {
 		songs: [], //Stores songs from API calls
 		artistSort: "a", //sorts by artist.  Default is ascending
 		titleSort: "a", //sorts by title.  Default is ascending
-		countSort: "d", //sorts by number of times song was played.  Default is higher count
+		countSort: "a", //sorts by number of times song was played.  Default is lower count but when App.js loads, it changes to higher count.
 		songSort: "descending", //sorts by date/time song was plaed.  Default is more recent
 		lastUpdated: "", //Used for last updated statement
 		count: "",

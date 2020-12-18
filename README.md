@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Introduction
+The inspiration for this project came from decorating the house for the holidays over the Thanksgiving extended weekend.  While listening to a local radio station for over 2 hours, it seemed like some songs were played multiple times.  I decided it was time to look into the playlist and do some analysis!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Foundation
 
-## Available Scripts
+For the capstone project of the SEI experience provided by General Assembly, the goal is to build a fully functioning web application which consists of the following two apps:
 
-In the project directory, you can run:
+1. A front-end React application that updates the UI and communicates with a backend API.
+2. Backend API - while there are several options, the choice was Express with Mongo + Mongoose.
 
-### `npm start`
+# Application Locations
+The front end is located <a href="https://project4-cram.herokuapp.com/">here.</a>
+The backend is located <a href="https://johnm-project4-cram.herokuapp.com/">here.</a>  Its GitHub is <a href="https://github.com/jmieszko/project4-backend">here.</a>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# API Usage
+All data are populated using an external API: <a href="https://nowplaying.bbgi.com/WMGQFM/list?limit=1000"></a>
+The 1000 limit is the maximum number of entries the API will return; if the number is higher, or not specified at all, then the API returns a blank array and an error message.  
+* The backend compares the results to the API and a MongoDB collection based on the "timestamp" field of the object.
+* If there is a match in the MongoDB collection, the backend will not add it so as to avoid duplicates.
+* If there is a match, the backend will create a document and populate with the data from the external API.  In addition, other date-related fields are added for functionality.
+* The backend also supplies collections to enable sorting (by title or artist) as well as a snapshot of the playlist for not just the entire collection, but also the current date starting at 12:00a.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+# User Stories
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] As a user, I want to be able to search by either artist or title so that I know how many instances they appeared. 
 
-### `npm run build`
+- [x] As a user, I want to see a list of songs played today so that I know what was recently played.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [x] As a user, I want to see all of the songs played and when so that I can understand the playlist.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [x] As a user, I want to see a list of unique songs played (unique is by both artist and title) so that I can determine how often certain songs are played.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [x] As a user, I want to be able to sort the list by time played to better understand the playlist.
 
-### `npm run eject`
+- [x] As a user, I want to be able to sort the list by title to better understand the playlist.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [x] As a user, I want to be able to sort the list by artist to better understand the playlist.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] As a user, I do not want to see duplicate entries in the playlist so that I can efficiently browse the playlist.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [x] As a user, I want to see an average number of songs played per hour to better understand the playlist.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Future Enhancements
 
-## Learn More
+- Update timestamps based on US Eastern time, as that is where the radio station is located.  Presently, the timestamps are UTC.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Implement more analytics around individual songs, artists, averages, etc.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Improve search capabilities to produce more results especially around the analytics mentioned above.
 
-### Code Splitting
+- Fix the sorting options for the Title, Artist, and Time Played.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+# Wireframes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<img src="/planning/wireframe.png" />
+Wireframe 
 
-### Making a Progressive Web App
+# Acknowledgements
+The following resources were used in the implementation of this site:
+ [Christmas Lights Header] (https://codepen.io/tobyj/pen/QjvEex)
+[MongoDB Group By Multiple Fields Using Aggregation] (https://kb.objectrocket.com/mongo-db/mongodb-group-by-multiple-fields-using-aggregation-function-464)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[Drop Down Menu in React](https://stackoverflow.com/questions/29108779/how-to-get-selected-value-of-a-dropdown-menu-in-reactjs)
+ 
+ [Wrapping a React router link in an HTML button] (https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button)
 
-### Advanced Configuration
+[Query documents in Mongoose with specified date range] (https://dev.to/itz_giddy/how-to-query-documents-in-mongodb-that-fall-within-a-specified-date-range-using-mongoose-and-node-524a)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[Mongoose Find by Like] (https://stackoverflow.com/questions/9824010/mongoose-js-find-user-by-username-like-value)
 
-### Deployment
+[Mongoose Search Part of String] (https://stackoverflow.com/questions/26814456/how-to-get-all-the-values-that-contains-part-of-a-string-using-mongoose-find/26814550)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[Mongoose Group By and Populate] (https://stackoverflow.com/questions/25231022/mongoose-how-to-group-by-and-populate)
 
-### `npm run build` fails to minify
+[Mongoose Sorting] (https://medium.com/@jeanjacquesbagui/in-mongoose-sort-by-date-node-js-4dfcba254110)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Change Placeholder CSS] (https://www.w3schools.com/howto/howto_css_placeholder.asp)
+
+[Buttons CSS] (https://www.w3schools.com/css/css3_buttons.asp)
+
+[Convert string to date in Javascript] (https://stackoverflow.com/questions/5619202/converting-a-string-to-a-date-in-javascript)
+
