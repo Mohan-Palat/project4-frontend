@@ -58,27 +58,28 @@ The 1000 limit is the maximum number of entries the API will return; if the numb
 Wireframe 
 
 # Acknowledgements
-The following resources were used in the implementation of this site:
- [Christmas Lights Header] (https://codepen.io/tobyj/pen/QjvEex)
-[MongoDB Group By Multiple Fields Using Aggregation] (https://kb.objectrocket.com/mongo-db/mongodb-group-by-multiple-fields-using-aggregation-function-464)
+<p>The following resources were used in the implementation of this site:</p>
+ <a href="https://codepen.io/tobyj/pen/QjvEex">Christmas Lights Header</a>
 
-[Drop Down Menu in React](https://stackoverflow.com/questions/29108779/how-to-get-selected-value-of-a-dropdown-menu-in-reactjs)
+<a href="https://kb.objectrocket.com/mongo-db/mongodb-group-by-multiple-fields-using-aggregation-function-464">MongoDB Group By Multiple Fields Using Aggregation</a>
+
+<a href="https://stackoverflow.com/questions/29108779/how-to-get-selected-value-of-a-dropdown-menu-in-reactjs">Drop Down Menu in React</a>
  
- [Wrapping a React router link in an HTML button] (https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button)
+ <a href="https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button">Wrapping a React router link in an HTML button</a>
 
-[Query documents in Mongoose with specified date range] (https://dev.to/itz_giddy/how-to-query-documents-in-mongodb-that-fall-within-a-specified-date-range-using-mongoose-and-node-524a)
+<a href="https://dev.to/itz_giddy/how-to-query-documents-in-mongodb-that-fall-within-a-specified-date-range-using-mongoose-and-node-524a">Query documents in Mongoose with specified date range</a>
 
-[Mongoose Find by Like] (https://stackoverflow.com/questions/9824010/mongoose-js-find-user-by-username-like-value)
+<a href="https://stackoverflow.com/questions/9824010/mongoose-js-find-user-by-username-like-value">Mongoose Find by Like</a>
 
-[Mongoose Search Part of String] (https://stackoverflow.com/questions/26814456/how-to-get-all-the-values-that-contains-part-of-a-string-using-mongoose-find/26814550)
+<a href="https://stackoverflow.com/questions/26814456/how-to-get-all-the-values-that-contains-part-of-a-string-using-mongoose-find/26814550">Mongoose Search Part of String</a>
 
-[Mongoose Group By and Populate] (https://stackoverflow.com/questions/25231022/mongoose-how-to-group-by-and-populate)
+<a href="https://stackoverflow.com/questions/25231022/mongoose-how-to-group-by-and-populate">Mongoose Group By and Populate</a>
 
-[Mongoose Sorting] (https://medium.com/@jeanjacquesbagui/in-mongoose-sort-by-date-node-js-4dfcba254110)
+<a href="https://medium.com/@jeanjacquesbagui/in-mongoose-sort-by-date-node-js-4dfcba254110">Mongoose Sorting</a>
 
-[Change Placeholder CSS] (https://www.w3schools.com/howto/howto_css_placeholder.asp)
+<a href="https://www.w3schools.com/howto/howto_css_placeholder.asp">Change Placeholder CSS</a>
 
-[Buttons CSS] (https://www.w3schools.com/css/css3_buttons.asp)
+<a href="https://www.w3schools.com/css/css3_buttons.asp">Buttons CSS</a>
 
-[Convert string to date in Javascript] (https://stackoverflow.com/questions/5619202/converting-a-string-to-a-date-in-javascript)
+<a href="https://stackoverflow.com/questions/5619202/converting-a-string-to-a-date-in-javascript">Convert string to date in Javascript</a>
 
